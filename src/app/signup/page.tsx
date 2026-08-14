@@ -41,7 +41,10 @@ export default function Signup() {
 
       if (response.ok) {
         console.log('Signup successful:', data);
-        router.push('/login');
+        // Auto-login after signup
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        router.push('/dashboard');
       } else {
         console.error('Signup failed:', data);
         setError(data.error || 'Signup failed');

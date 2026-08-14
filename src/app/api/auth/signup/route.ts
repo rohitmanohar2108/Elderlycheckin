@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { query } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
@@ -38,9 +39,17 @@ export async function POST(request: NextRequest) {
 
     const user = result.rows[0];
 
+    // Generate JWT token for auto-login
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET || 'your_jwt_secret_key',
+      { expiresIn: '7d' }
+    );
+
     return NextResponse.json(
       { 
         message: 'User created successfully',
+        token,
         user: {
           id: user.id,
           email: user.email,
