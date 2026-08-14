@@ -34,6 +34,8 @@ export default function Login() {
         document.cookie = `token=${data.token}; path=/; max-age=604800`; // 7 days
         localStorage.setItem('user', JSON.stringify(data.user));
         console.log('Login successful, redirecting to dashboard');
+        console.log('Cookie set:', document.cookie);
+        console.log('Redirecting to /dashboard');
         router.push('/dashboard');
       } else {
         console.error('Login failed:', data.error);
