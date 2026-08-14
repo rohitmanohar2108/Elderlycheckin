@@ -1,3 +1,5 @@
+import { config } from 'dotenv';
+config();
 import { query } from '../src/lib/db';
 import bcrypt from 'bcryptjs';
 

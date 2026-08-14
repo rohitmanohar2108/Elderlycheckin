@@ -1,3 +1,5 @@
+import { config } from 'dotenv';
+config();
 import { initializeDatabase } from '../src/lib/init-db';
 import { startScheduler } from '../src/lib/scheduler';
 
