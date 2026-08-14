@@ -42,7 +42,7 @@ export default function Signup() {
       if (response.ok) {
         console.log('Signup successful:', data);
         // Auto-login after signup
-        localStorage.setItem('token', data.token);
+        document.cookie = `token=${data.token}; path=/; max-age=604800`; // 7 days
         localStorage.setItem('user', JSON.stringify(data.user));
         router.push('/dashboard');
       } else {

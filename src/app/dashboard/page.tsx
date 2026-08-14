@@ -34,7 +34,14 @@ export default function Dashboard() {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      return null;
+    };
+
+    const storedToken = getCookie('token') || localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     
     if (!storedToken || !storedUser) {

@@ -30,7 +30,8 @@ export default function Login() {
       console.log('Login response:', response.status, data);
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
+        // Set token as cookie for middleware to read
+        document.cookie = `token=${data.token}; path=/; max-age=604800`; // 7 days
         localStorage.setItem('user', JSON.stringify(data.user));
         console.log('Login successful, redirecting to dashboard');
         router.push('/dashboard');
