@@ -40,11 +40,14 @@ export default function Signup() {
       const data = await response.json();
 
       if (response.ok) {
+        console.log('Signup successful:', data);
         router.push('/login');
       } else {
+        console.error('Signup failed:', data);
         setError(data.error || 'Signup failed');
       }
     } catch (err) {
+      console.error('Signup error:', err);
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);

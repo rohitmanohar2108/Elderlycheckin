@@ -19,6 +19,7 @@ export default function Login() {
     setLoading(true);
 
     try {
+      console.log('Attempting login with:', formData.email);
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,15 +27,19 @@ export default function Login() {
       });
 
       const data = await response.json();
+      console.log('Login response:', response.status, data);
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('Login successful, redirecting to dashboard');
         router.push('/dashboard');
       } else {
+        console.error('Login failed:', data.error);
         setError(data.error || 'Login failed');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);
