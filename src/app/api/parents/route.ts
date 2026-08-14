@@ -71,8 +71,17 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error('Parent registration error:', error);
+    
+    // Handle duplicate phone number error
+    if (error.code === '23505') {
+      return NextResponse.json(
+        { error: 'A parent with this phone number already exists' },
+        { status: 409 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
